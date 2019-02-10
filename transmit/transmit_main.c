@@ -60,6 +60,14 @@ int main(void)
 {
     uint8_t retVal;
 
+        static uint8_t fox_packet[64];
+	int i;
+	for (i=0; i < 63; i++) {
+		fox_packet[i] = (uint8_t) i;
+                printf("%i ", i);
+	}
+	printf("\n");
+
 	setSpiChannel(SPI_CHANNEL);
 	setSpiSpeed(SPI_SPEED);
 	initializeSpi();
@@ -83,20 +91,21 @@ int main(void)
 	}
 
 	for (;;) {
-	    static uint8_t demo_packet_[sizeof(demo_packet)];
+	    //static uint8_t demo_packet_[sizeof(demo_packet)];
+	    static uint8_t demo_packet_[sizeof(fox_packet)];
 	    uint16_t pkt_counter = 0;
 
-            printf("Size of demo packet %d counter %d\n", sizeof(demo_packet), framing_insert_counter);
-
+            printf("Size of fox packet %d counter %d\n", sizeof(fox_packet), framing_insert_counter);
+/*
 	    ++pkt_counter;
-	    memcpy(demo_packet_, demo_packet, sizeof(demo_packet));
-/*	    if (framing_insert_counter) {
+	    memcpy(demo_packet_, fox_packet, sizeof(fox_packet));
+	    if (framing_insert_counter) {
 	        demo_packet_[framing_counter_pos] = (uint8_t)(pkt_counter & 0xFF);
 	        demo_packet_[framing_counter_pos+1] = (uint8_t)((pkt_counter>>8) & 0xFF);
 	    }
 */
 		printf("INFO: Sending another packet...\n");
-		retVal = transmit_packet(&remoteaddr_tx, demo_packet_, sizeof(demo_packet));
+		retVal = transmit_packet(&remoteaddr_tx, fox_packet, sizeof(fox_packet));
 		if (retVal != AXRADIO_ERR_NOERROR) {
 			fprintf(stderr, "ERROR: Unable to transmit a packet\n");
 			exit(EXIT_FAILURE);

@@ -30,8 +30,8 @@
  void ax5043_set_registers(void)
 {
 	ax5043WriteReg(AX5043_MODULATION, 0x04); // PSK was 0x08);
-	ax5043WriteReg(AX5043_ENCODING, 0x00);
-	ax5043WriteReg(AX5043_FRAMING, 0x00); // No framking 0x24);
+	ax5043WriteReg(AX5043_ENCODING, 0x02); // Differential encoding  0);
+	ax5043WriteReg(AX5043_FRAMING, 0x66); // Framing from gen?  0x24);
 	ax5043WriteReg(AX5043_FEC, 0x13);
 	ax5043WriteReg(AX5043_PINFUNCSYSCLK, 0x01);
 	ax5043WriteReg(AX5043_PINFUNCDCLK, 0x01);
@@ -370,8 +370,8 @@ const uint8_t axradio_framing_lenoffs = 0;
 const uint8_t axradio_framing_lenmask = 0xff;
 const uint8_t axradio_framing_swcrclen = 0;
 
-const uint8_t axradio_framing_synclen = 0; // 32;
-const uint8_t axradio_framing_syncword[] = { 0xcc, 0xaa, 0xcc, 0xaa};
+const uint8_t axradio_framing_synclen = 8; // 32;
+const uint8_t axradio_framing_syncword[] = { 0xaa }; // , 0xaa, 0xcc, 0xaa};
 const uint8_t axradio_framing_syncflags = 0x18;
 const uint8_t axradio_framing_enable_sfdcallback = 0;
 
