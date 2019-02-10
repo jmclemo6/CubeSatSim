@@ -1,6 +1,7 @@
 all: libax5043.a
 all: radioafsk 
 all: radiocw 
+all: radiobpsk
 
 rebuild: clean
 rebuild: all
@@ -12,7 +13,6 @@ clean:
 	rm -f radiocw
 	rm -f radiopiglatin
 	rm -f testax5043rx
-	rm -f testax5043tx
 	rm -f testax50432freq
 	rm -f testax5043init
 	rm -f radioafsk
@@ -22,6 +22,7 @@ clean:
 	rm -f */*/*.o
 	rm -rf ax5043/doc/html
 	rm -rf ax5043/doc/latex
+	rm -f radiobpsk
 
 docs:
 	mkdir -p ax5043/doc; cd ax5043; doxygen Doxyfile
@@ -57,9 +58,9 @@ radiopiglatin: libax5043.a
 radiopiglatin: piglatin/piglatin_main.o
 	gcc -o radiopiglatin -pedantic -Wall -Wextra -L./ piglatin/piglatin_main.o -lwiringPi -lax5043
 
-testax5043tx: libax5043.a
-testax5043tx: transmit/transmit_main.o
-	gcc -o testax5043tx -pedantic -Wall -Wextra -L./ transmit/transmit_main.o -lwiringPi -lax5043
+radiobpsk: libax5043.a
+radiobpsk: transmit/transmit_main.o
+	gcc -o radiobpsk -pedantic -Wall -Wextra -L./ transmit/transmit_main.o -lwiringPi -lax5043
 
 testax5043rx: libax5043.a
 testax5043rx: receive/receive_main.o
