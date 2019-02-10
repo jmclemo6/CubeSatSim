@@ -86,6 +86,8 @@ int main(void)
 	    static uint8_t demo_packet_[sizeof(demo_packet)];
 	    uint16_t pkt_counter = 0;
 
+            printf("Size of demo packet %d\n", sizeof(demo_packet));
+
 	    ++pkt_counter;
 	    memcpy(demo_packet_, demo_packet, sizeof(demo_packet));
 	    if (framing_insert_counter) {
