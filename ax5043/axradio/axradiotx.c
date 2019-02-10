@@ -93,6 +93,8 @@ uint8_t transmit_packet(const struct axradio_address *addr, const uint8_t *pkt, 
 	struct axradio_address_mask axradio_localaddr;
 	uint16_t axradio_txbuffer_cnt = 0;
 
+//    printf("transmit_packet with extra removed\n");
+
     axradio_txbuffer_len = pktlen + axradio_framing_maclen;
     if (axradio_txbuffer_len > sizeof(axradio_txbuffer))
         return AXRADIO_ERR_INVALID;

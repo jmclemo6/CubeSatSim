@@ -351,17 +351,17 @@ const uint16_t axradio_phy_cs_period = 7; // timer0 units, 10ms
 const uint8_t axradio_phy_cs_enabled = 0;
 const uint8_t axradio_phy_lbt_retries = 0;
 const uint8_t axradio_phy_lbt_forcetx = 0;
-const uint16_t axradio_phy_preamble_wor_longlen = 2; // wor_longlen + wor_len totals to 240.0ms plus 112bits
-const uint16_t axradio_phy_preamble_wor_len = 176;
+const uint16_t axradio_phy_preamble_wor_longlen = 0; // 2; // wor_longlen + wor_len totals to 240.0ms plus 112bits
+const uint16_t axradio_phy_preamble_wor_len = 0; // 176;
 const uint16_t axradio_phy_preamble_longlen = 0;
-const uint16_t axradio_phy_preamble_len = 112;
+const uint16_t axradio_phy_preamble_len = 0; // 112;
 const uint8_t axradio_phy_preamble_byte = 0x7e;
 const uint8_t axradio_phy_preamble_flags = 0x38;
 const uint8_t axradio_phy_preamble_appendbits = 0;
 const uint8_t axradio_phy_preamble_appendpattern = 0x00;
 
 //framing
-const uint8_t axradio_framing_maclen = 1;
+const uint8_t axradio_framing_maclen = 0; // 1;
 const uint8_t axradio_framing_addrlen = 0;
 const uint8_t axradio_framing_destaddrpos = 0;
 const uint8_t axradio_framing_sourceaddrpos = 0xff;
@@ -370,7 +370,7 @@ const uint8_t axradio_framing_lenoffs = 0;
 const uint8_t axradio_framing_lenmask = 0xff;
 const uint8_t axradio_framing_swcrclen = 0;
 
-const uint8_t axradio_framing_synclen = 32;
+const uint8_t axradio_framing_synclen = 0; // 32;
 const uint8_t axradio_framing_syncword[] = { 0xcc, 0xaa, 0xcc, 0xaa};
 const uint8_t axradio_framing_syncflags = 0x18;
 const uint8_t axradio_framing_enable_sfdcallback = 0;
