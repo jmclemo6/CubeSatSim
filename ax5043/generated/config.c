@@ -271,17 +271,17 @@
  int32_t axradio_conv_freq_fromhz(int32_t f)
 {
 	/* scale by 1.048576 (true 1.048576) */
-	CONSTMULFIX24(0x10c6f7a);
+//	CONSTMULFIX24(0x10c6f7a);
 	/* scale by 0.349525 (true 0.349525) */
-//	CONSTMULFIX24(0x597a7e);
+	CONSTMULFIX24(0x597a7e);
 }
 
  int32_t axradio_conv_freq_tohz(int32_t f)
 {
 	/* scale by 0.953674 (true 0.953674) */
-	CONSTMULFIX24(0xf42400);
+//	CONSTMULFIX24(0xf42400);
 	/* scale by 2.861023 (true 2.861023) */
-//	CONSTMULFIX24(0x2dc6c00);
+	CONSTMULFIX24(0x2dc6c00);
 }
 
 const uint8_t axradio_phy_innerfreqloop = 0;
@@ -294,12 +294,12 @@ const uint8_t axradio_phy_innerfreqloop = 0;
 
  int32_t axradio_conv_timeinterval_totimer0(int32_t dt)
 {
-	/* scale by 0.032776 (true 0.032768) */
+	/* scale by 0.010864 (true 0.010923) */
 	int32_t r;
-	dt >>= 5;
+	dt >>= 6;
 	r = dt;
-	dt >>= 4;
-	r += dt;
+	dt >>= 2;
+	r -= dt;
 	dt >>= 2;
 	r -= dt;
 	dt >>= 3;
