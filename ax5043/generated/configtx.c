@@ -40,12 +40,3 @@ const struct axradio_address_mask localaddr_tx = {
 	{ 0x33, 0x34, 0x00, 0x00},
 	{ 0xff, 0xff, 0x00, 0x00}
 };
-
-
-const uint8_t raming_insert_counter = 1;
-const uint8_t framing_counter_pos = 0;
-
-const uint16_t lposckfiltmax = 0xaec;
-
-
-const uint16_t lpxosc_settlingtime = 3000;
