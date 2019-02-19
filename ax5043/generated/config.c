@@ -32,7 +32,7 @@
  void ax5043_set_registers(void)
 {
 	ax5043WriteReg(AX5043_MODULATION, 0x04); // PSK was 0x08);
-	ax5043WriteReg(AX5043_ENCODING, 0x00); // Differential encoding  0);
+	ax5043WriteReg(AX5043_ENCODING, 0x02); // Differential encoding was 0);
 	ax5043WriteReg(AX5043_FRAMING, 0x66); // Framing from gen?  0x24);
 	ax5043WriteReg(AX5043_FEC, 0x13);
 	ax5043WriteReg(AX5043_PINFUNCSYSCLK, 0x01);
@@ -361,7 +361,7 @@ const uint16_t axradio_phy_preamble_wor_longlen = 1; // 2; // wor_longlen + wor_
 const uint16_t axradio_phy_preamble_wor_len = 64; // 176;
 const uint16_t axradio_phy_preamble_longlen = 0;
 const uint16_t axradio_phy_preamble_len = 32; // 112;
-const uint8_t axradio_phy_preamble_byte = 0x55;
+const uint8_t axradio_phy_preamble_byte = 0x05;
 const uint8_t axradio_phy_preamble_flags = 0x38;
 const uint8_t axradio_phy_preamble_appendbits = 0;
 const uint8_t axradio_phy_preamble_appendpattern = 0x00;
