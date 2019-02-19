@@ -41,18 +41,18 @@
 	ax5043WriteReg(AX5043_PINFUNCANTSEL, 0x01);
 	ax5043WriteReg(AX5043_PINFUNCPWRAMP, 0x07);
 	ax5043WriteReg(AX5043_WAKEUPXOEARLY, 0x01);
-	ax5043WriteReg(AX5043_IFFREQ1, 0x01);
-	ax5043WriteReg(AX5043_IFFREQ0, 0x58);
-	ax5043WriteReg(AX5043_DECIMATION, 0x7F);
+	ax5043WriteReg(AX5043_IFFREQ1, 0x02);
+	ax5043WriteReg(AX5043_IFFREQ0, 0x04);
+	ax5043WriteReg(AX5043_DECIMATION, 0x6F);
 	ax5043WriteReg(AX5043_RXDATARATE2, 0x00);
-	ax5043WriteReg(AX5043_RXDATARATE1, 0x4E);
-	ax5043WriteReg(AX5043_RXDATARATE0, 0xBD);
+	ax5043WriteReg(AX5043_RXDATARATE1, 0x3C);
+	ax5043WriteReg(AX5043_RXDATARATE0, 0x0F);
 	ax5043WriteReg(AX5043_MAXDROFFSET2, 0x00);
 	ax5043WriteReg(AX5043_MAXDROFFSET1, 0x00);
 	ax5043WriteReg(AX5043_MAXDROFFSET0, 0x00);
 	ax5043WriteReg(AX5043_MAXRFOFFSET2, 0x80);
-	ax5043WriteReg(AX5043_MAXRFOFFSET1, 0x01);
-	ax5043WriteReg(AX5043_MAXRFOFFSET0, 0x34);
+	ax5043WriteReg(AX5043_MAXRFOFFSET1, 0x03);
+	ax5043WriteReg(AX5043_MAXRFOFFSET0, 0x9B);
 	ax5043WriteReg(AX5043_FSKDMAX1, 0x00);
 	ax5043WriteReg(AX5043_FSKDMAX0, 0xA6);
 	ax5043WriteReg(AX5043_FSKDMIN1, 0xFF);
@@ -61,13 +61,13 @@
 	ax5043WriteReg(AX5043_RXPARAMSETS, 0xF4);
 	ax5043WriteReg(AX5043_AGCGAIN0, 0xE8);
 	ax5043WriteReg(AX5043_AGCTARGET0, 0x84);
-	ax5043WriteReg(AX5043_TIMEGAIN0, 0x99);
-	ax5043WriteReg(AX5043_DRGAIN0, 0x93);
-	ax5043WriteReg(AX5043_PHASEGAIN0, 0x83);
+	ax5043WriteReg(AX5043_TIMEGAIN0, 0xF8);
+	ax5043WriteReg(AX5043_DRGAIN0, 0xF2);
+	ax5043WriteReg(AX5043_PHASEGAIN0, 0xC3);
 	ax5043WriteReg(AX5043_FREQUENCYGAINA0, 0x0F);
 	ax5043WriteReg(AX5043_FREQUENCYGAINB0, 0x1F);
-	ax5043WriteReg(AX5043_FREQUENCYGAINC0, 0x0B);
-	ax5043WriteReg(AX5043_FREQUENCYGAIND0, 0x0B);
+	ax5043WriteReg(AX5043_FREQUENCYGAINC0, 0x0A);
+	ax5043WriteReg(AX5043_FREQUENCYGAIND0, 0x0A);
 	ax5043WriteReg(AX5043_AMPLITUDEGAIN0, 0x06);
 	ax5043WriteReg(AX5043_FREQDEV10, 0x00);
 	ax5043WriteReg(AX5043_FREQDEV00, 0x00);
@@ -76,13 +76,13 @@
 	ax5043WriteReg(AX5043_AGCTARGET1, 0x84);
 	ax5043WriteReg(AX5043_AGCAHYST1, 0x00);
 	ax5043WriteReg(AX5043_AGCMINMAX1, 0x00);
-	ax5043WriteReg(AX5043_TIMEGAIN1, 0x97);
-	ax5043WriteReg(AX5043_DRGAIN1, 0x92);
-	ax5043WriteReg(AX5043_PHASEGAIN1, 0x83);
+	ax5043WriteReg(AX5043_TIMEGAIN1, 0xF6);
+	ax5043WriteReg(AX5043_DRGAIN1, 0xF1);
+	ax5043WriteReg(AX5043_PHASEGAIN1, 0xC3);
 	ax5043WriteReg(AX5043_FREQUENCYGAINA1, 0x0F);
 	ax5043WriteReg(AX5043_FREQUENCYGAINB1, 0x1F);
-	ax5043WriteReg(AX5043_FREQUENCYGAINC1, 0x0B);
-	ax5043WriteReg(AX5043_FREQUENCYGAIND1, 0x0B);
+	ax5043WriteReg(AX5043_FREQUENCYGAINC1, 0x0A);
+	ax5043WriteReg(AX5043_FREQUENCYGAIND1, 0x0A);
 	ax5043WriteReg(AX5043_AMPLITUDEGAIN1, 0x06);
 	ax5043WriteReg(AX5043_FREQDEV11, 0x00);
 	ax5043WriteReg(AX5043_FREQDEV01, 0x4B);
@@ -92,9 +92,9 @@
 	ax5043WriteReg(AX5043_AGCTARGET3, 0x84);
 	ax5043WriteReg(AX5043_AGCAHYST3, 0x00);
 	ax5043WriteReg(AX5043_AGCMINMAX3, 0x00);
-	ax5043WriteReg(AX5043_TIMEGAIN3, 0x96);
-	ax5043WriteReg(AX5043_DRGAIN3, 0x91);
-	ax5043WriteReg(AX5043_PHASEGAIN3, 0x83);
+	ax5043WriteReg(AX5043_TIMEGAIN3, 0xF5);
+	ax5043WriteReg(AX5043_DRGAIN3, 0xF0);
+	ax5043WriteReg(AX5043_PHASEGAIN3, 0xC3);
 	ax5043WriteReg(AX5043_FREQUENCYGAINA3, 0x0F);
 	ax5043WriteReg(AX5043_FREQUENCYGAINB3, 0x1F);
 	ax5043WriteReg(AX5043_FREQUENCYGAINC3, 0x0D);
@@ -106,36 +106,36 @@
 	ax5043WriteReg(AX5043_BBOFFSRES3, 0x00);
 	ax5043WriteReg(AX5043_MODCFGF, 0x00);
 	ax5043WriteReg(AX5043_FSKDEV2, 0x00);
-	ax5043WriteReg(AX5043_FSKDEV1, 0x00);
-	ax5043WriteReg(AX5043_FSKDEV0, 0xAF);
+	ax5043WriteReg(AX5043_FSKDEV1, 0x02);
+	ax5043WriteReg(AX5043_FSKDEV0, 0x0C);
 	ax5043WriteReg(AX5043_MODCFGA, 0x05);
 	ax5043WriteReg(AX5043_TXRATE2, 0x00);
-	ax5043WriteReg(AX5043_TXRATE1, 0x01); // 1200bps 0x13);
-	ax5043WriteReg(AX5043_TXRATE0, 0xA3); //         0xA9);
+	ax5043WriteReg(AX5043_TXRATE1, 0x04); // 1200bps 0x13);
+	ax5043WriteReg(AX5043_TXRATE0, 0xE4); //         0xA9);
 	ax5043WriteReg(AX5043_TXPWRCOEFFB1, 0x0F);
 	ax5043WriteReg(AX5043_TXPWRCOEFFB0, 0xFF);
-	ax5043WriteReg(AX5043_PLLVCOI, 0x98);
-	ax5043WriteReg(AX5043_PLLRNGCLK, 0x05);
+	ax5043WriteReg(AX5043_PLLVCOI, 0x99);
+	ax5043WriteReg(AX5043_PLLRNGCLK, 0x03);
 	ax5043WriteReg(AX5043_BBTUNE, 0x0F);
 	ax5043WriteReg(AX5043_BBOFFSCAP, 0x77);
 	ax5043WriteReg(AX5043_PKTADDRCFG, 0x00);
 	ax5043WriteReg(AX5043_PKTLENCFG, 0x00);
-	ax5043WriteReg(AX5043_PKTLENOFFSET, 0x06);
+	ax5043WriteReg(AX5043_PKTLENOFFSET, 0x08);
 	ax5043WriteReg(AX5043_PKTMAXLEN, 0xC8);
 	ax5043WriteReg(AX5043_MATCH0PAT3, 0xA3);
 	ax5043WriteReg(AX5043_MATCH0PAT2, 0xA3);
 	ax5043WriteReg(AX5043_MATCH0PAT1, 0x00);
-	ax5043WriteReg(AX5043_MATCH0PAT0, 0x0);
+	ax5043WriteReg(AX5043_MATCH0PAT0, 0x00);
 	ax5043WriteReg(AX5043_MATCH1PAT1, 0x55);
 	ax5043WriteReg(AX5043_MATCH1PAT0, 0x55);
 	ax5043WriteReg(AX5043_MATCH1LEN, 0x8A);
 	ax5043WriteReg(AX5043_MATCH1MAX, 0x0A);
-	ax5043WriteReg(AX5043_TMGTXBOOST, 0x5B);
-	ax5043WriteReg(AX5043_TMGTXSETTLE, 0x3E);
-	ax5043WriteReg(AX5043_TMGRXBOOST, 0x5B);
-	ax5043WriteReg(AX5043_TMGRXSETTLE, 0x3E);
+	ax5043WriteReg(AX5043_TMGTXBOOST, 0x32);
+	ax5043WriteReg(AX5043_TMGTXSETTLE, 0x14);
+	ax5043WriteReg(AX5043_TMGRXBOOST, 0x32);
+	ax5043WriteReg(AX5043_TMGRXSETTLE, 0x14);
 	ax5043WriteReg(AX5043_TMGRXOFFSACQ, 0x00);
-	ax5043WriteReg(AX5043_TMGRXCOARSEAGC, 0x9C);
+	ax5043WriteReg(AX5043_TMGRXCOARSEAGC, 0x73);
 	ax5043WriteReg(AX5043_TMGRXRSSI, 0x03);
 	ax5043WriteReg(AX5043_TMGRXPREAMBLE2, 0x1A);
 	ax5043WriteReg(AX5043_RSSIABSTHR, 0xDC);
@@ -154,7 +154,7 @@
 	ax5043WriteReg(AX5043_0xF23, 0x84);
 	ax5043WriteReg(AX5043_0xF26, 0x98);
 	ax5043WriteReg(AX5043_0xF34, 0x28);
-	ax5043WriteReg(AX5043_0xF35, 0x11);
+	ax5043WriteReg(AX5043_0xF35, 0x10);
 	ax5043WriteReg(AX5043_0xF44, 0x25);
 }
 
@@ -174,7 +174,7 @@
 {
 	ax5043WriteReg(AX5043_PLLLOOP, 0x0B);
 	ax5043WriteReg(AX5043_PLLCPI, 0x10);
-	ax5043WriteReg(AX5043_PLLVCODIV, 0x25);
+	ax5043WriteReg(AX5043_PLLVCODIV, 0x24);
 	ax5043WriteReg(AX5043_XTALCAP, 0x00);
 	ax5043WriteReg(AX5043_0xF00, 0x0F);
 	ax5043WriteReg(AX5043_0xF18, 0x02);
@@ -183,7 +183,7 @@
 
  void ax5043_set_registers_rxwor(void)
 {
-	ax5043WriteReg(AX5043_TMGRXAGC, 0x0E);
+	ax5043WriteReg(AX5043_TMGRXAGC, 0x15);
 	ax5043WriteReg(AX5043_TMGRXPREAMBLE1, 0x19);
 	ax5043WriteReg(AX5043_PKTMISCFLAGS, 0x03);
 }
@@ -271,17 +271,17 @@
  int32_t axradio_conv_freq_fromhz(int32_t f)
 {
 	/* scale by 1.048576 (true 1.048576) */
-//	CONSTMULFIX24(0x10c6f7a);
+	CONSTMULFIX24(0x10c6f7a);
 	/* scale by 0.349525 (true 0.349525) */
-	CONSTMULFIX24(0x597a7e);
+//	CONSTMULFIX24(0x597a7e);
 }
 
  int32_t axradio_conv_freq_tohz(int32_t f)
 {
 	/* scale by 0.953674 (true 0.953674) */
-//	CONSTMULFIX24(0xf42400);
+	CONSTMULFIX24(0xf42400);
 	/* scale by 2.861023 (true 2.861023) */
-	CONSTMULFIX24(0x2dc6c00);
+//	CONSTMULFIX24(0x2dc6c00);
 }
 
 const uint8_t axradio_phy_innerfreqloop = 0;
@@ -294,12 +294,12 @@ const uint8_t axradio_phy_innerfreqloop = 0;
 
  int32_t axradio_conv_timeinterval_totimer0(int32_t dt)
 {
-	/* scale by 0.010864 (true 0.010923) */
+	/* scale by 0.032776 (true 0.032768) */
 	int32_t r;
-	dt >>= 6;
+	dt >>= 5;
 	r = dt;
-	dt >>= 2;
-	r -= dt;
+	dt >>= 4;
+	r += dt;
 	dt >>= 2;
 	r -= dt;
 	dt >>= 3;
@@ -341,38 +341,38 @@ const uint8_t axradio_phy_innerfreqloop = 0;
 // physical layer
 const uint8_t axradio_phy_pn9 = 0;
 const uint8_t axradio_phy_nrchannels = 1;
-const uint32_t axradio_phy_chanfreq[1] = { 0x09300001 };
+const uint32_t axradio_phy_chanfreq[1] = { 0x1b800001 };
 const uint8_t axradio_phy_chanpllrnginit[1] = { 0x09 };
-const uint8_t axradio_phy_chanvcoiinit[1] = { 0x98 };
+const uint8_t axradio_phy_chanvcoiinit[1] = { 0x99 };
 uint8_t axradio_phy_chanpllrng[1];
 uint8_t axradio_phy_chanvcoi[1];
 const uint8_t axradio_phy_vcocalib = 0;
-const int32_t axradio_phy_maxfreqoffset = 925;
+const int32_t axradio_phy_maxfreqoffset = 2768;
 const int8_t axradio_phy_rssioffset = 64;
 // axradio_phy_rssioffset is added to AX5043_RSSIREFERENCE and subtracted from chip RSSI value to prevent overflows (8bit RSSI only goes down to -128)
 // axradio_phy_rssioffset is also added to AX5043_RSSIABSTHR
-const int8_t axradio_phy_rssireference = (int8_t)(0xFA + 64);
+const int8_t axradio_phy_rssireference = (int8_t)(0xF8 + 64);
 const int8_t axradio_phy_channelbusy = -100 + 64;
 const uint16_t axradio_phy_cs_period = 7; // timer0 units, 10ms
 const uint8_t axradio_phy_cs_enabled = 0;
 const uint8_t axradio_phy_lbt_retries = 0;
 const uint8_t axradio_phy_lbt_forcetx = 0;
 const uint16_t axradio_phy_preamble_wor_longlen = 1; // 2; // wor_longlen + wor_len totals to 240.0ms plus 112bits
-const uint16_t axradio_phy_preamble_wor_len = 32; // 176;
+const uint16_t axradio_phy_preamble_wor_len = 64; // 176;
 const uint16_t axradio_phy_preamble_longlen = 0;
-const uint16_t axradio_phy_preamble_len = 0; // 112;
+const uint16_t axradio_phy_preamble_len = 32; // 112;
 const uint8_t axradio_phy_preamble_byte = 0x55;
 const uint8_t axradio_phy_preamble_flags = 0x38;
 const uint8_t axradio_phy_preamble_appendbits = 0;
 const uint8_t axradio_phy_preamble_appendpattern = 0x00;
 
 //framing
-const uint8_t axradio_framing_maclen = 0; // 1;
+const uint8_t axradio_framing_maclen = 2; // 1;
 const uint8_t axradio_framing_addrlen = 2;
 const uint8_t axradio_framing_destaddrpos = 0;
 const uint8_t axradio_framing_sourceaddrpos = 0xff;
 const uint8_t axradio_framing_lenpos = 0;
-const uint8_t axradio_framing_lenoffs = 6;
+const uint8_t axradio_framing_lenoffs = 8;
 const uint8_t axradio_framing_lenmask = 0x00;
 const uint8_t axradio_framing_swcrclen = 0;
 
@@ -381,7 +381,7 @@ const uint8_t axradio_framing_syncword[] = { 0xa3, 0xa3, 0xcc, 0xaa }; // , 0xaa
 const uint8_t axradio_framing_syncflags = 0x18;
 const uint8_t axradio_framing_enable_sfdcallback = 0;
 
-const uint32_t axradio_framing_ack_timeout = 58; // 98.9ms in wtimer0 units (640Hz)
+const uint32_t axradio_framing_ack_timeout = 87; // 98.9ms in wtimer0 units (640Hz)
 const uint32_t axradio_framing_ack_delay = 313; // 1.0ms in wtimer1 units (20MHz/64)
 const uint8_t axradio_framing_ack_retransmissions = 0;
 const uint8_t axradio_framing_ack_seqnrpos = 0xff;
@@ -402,6 +402,6 @@ const uint8_t axradio_sync_slave_resyncloss = 11;  // resyncloss is one more tha
 // window 1 is the window normally used when there are no lost packets
 // window 2 is used after one packet is lost, etc
 const uint8_t axradio_sync_slave_nrrx = 3;
-const uint32_t axradio_sync_slave_rxadvance[] = { 1114, 1099, 1360 };// 55.918ms, 54.788ms, 57.167ms
-const uint32_t axradio_sync_slave_rxwindow[] = { 1167, 1137, 1659 }; // 56.346ms, 54.086ms, 58.844ms
-const uint32_t axradio_sync_slave_rxtimeout = 2677; // 92.5ms, maximum duration of a packet
+const uint32_t axradio_sync_slave_rxadvance[] = { 1988, 1973, 2234 };// 55.918ms, 54.788ms, 57.167ms
+const uint32_t axradio_sync_slave_rxwindow[] = { 2041, 2011, 2533 }; // 56.346ms, 54.086ms, 58.844ms
+const uint32_t axradio_sync_slave_rxtimeout = 3987; // 92.5ms, maximum duration of a packet
