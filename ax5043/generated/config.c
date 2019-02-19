@@ -41,8 +41,8 @@
 	ax5043WriteReg(AX5043_PINFUNCANTSEL, 0x01);
 	ax5043WriteReg(AX5043_PINFUNCPWRAMP, 0x07);
 	ax5043WriteReg(AX5043_WAKEUPXOEARLY, 0x01);
-	ax5043WriteReg(AX5043_IFFREQ1, 0x02);
-	ax5043WriteReg(AX5043_IFFREQ0, 0x04);
+	ax5043WriteReg(AX5043_IFFREQ1, 0x00);
+	ax5043WriteReg(AX5043_IFFREQ0, 0xCD);
 	ax5043WriteReg(AX5043_DECIMATION, 0x6F);
 	ax5043WriteReg(AX5043_RXDATARATE2, 0x00);
 	ax5043WriteReg(AX5043_RXDATARATE1, 0x3C);
@@ -112,8 +112,8 @@
 	ax5043WriteReg(AX5043_TXRATE2, 0x00);
 	ax5043WriteReg(AX5043_TXRATE1, 0x04); // 1200bps 0x13);
 	ax5043WriteReg(AX5043_TXRATE0, 0xE4); //         0xA9);
-	ax5043WriteReg(AX5043_TXPWRCOEFFB1, 0x0F);
-	ax5043WriteReg(AX5043_TXPWRCOEFFB0, 0xFF);
+	ax5043WriteReg(AX5043_TXPWRCOEFFB1, 0x04);  // 7dB was 0x0F);
+	ax5043WriteReg(AX5043_TXPWRCOEFFB0, 0xA9);   // was 0xFF);
 	ax5043WriteReg(AX5043_PLLVCOI, 0x99);
 	ax5043WriteReg(AX5043_PLLRNGCLK, 0x03);
 	ax5043WriteReg(AX5043_BBTUNE, 0x0F);
@@ -138,7 +138,7 @@
 	ax5043WriteReg(AX5043_TMGRXCOARSEAGC, 0x73);
 	ax5043WriteReg(AX5043_TMGRXRSSI, 0x03);
 	ax5043WriteReg(AX5043_TMGRXPREAMBLE2, 0x1A);
-	ax5043WriteReg(AX5043_RSSIABSTHR, 0xDC);
+	ax5043WriteReg(AX5043_RSSIABSTHR, 0xF0);
 	ax5043WriteReg(AX5043_BGNDRSSITHR, 0x00);
 	ax5043WriteReg(AX5043_PKTCHUNKSIZE, 0x0D);
 	ax5043WriteReg(AX5043_PKTACCEPTFLAGS, 0x20);
@@ -161,8 +161,8 @@
 
  void ax5043_set_registers_tx(void)
 {
-	ax5043WriteReg(AX5043_PLLLOOP, 0x0B);
-	ax5043WriteReg(AX5043_PLLCPI, 0x10);
+	ax5043WriteReg(AX5043_PLLLOOP, 0x09);
+	ax5043WriteReg(AX5043_PLLCPI, 0x02);
 	ax5043WriteReg(AX5043_PLLVCODIV, 0x24);
 	ax5043WriteReg(AX5043_XTALCAP, 0x00);
 	ax5043WriteReg(AX5043_0xF00, 0x0F);
@@ -352,7 +352,7 @@ const int8_t axradio_phy_rssioffset = 64;
 // axradio_phy_rssioffset is added to AX5043_RSSIREFERENCE and subtracted from chip RSSI value to prevent overflows (8bit RSSI only goes down to -128)
 // axradio_phy_rssioffset is also added to AX5043_RSSIABSTHR
 const int8_t axradio_phy_rssireference = (int8_t)(0xF8 + 64);
-const int8_t axradio_phy_channelbusy = -100 + 64;
+const int8_t axradio_phy_channelbusy = -80 + 64;
 const uint16_t axradio_phy_cs_period = 7; // timer0 units, 10ms
 const uint8_t axradio_phy_cs_enabled = 0;
 const uint8_t axradio_phy_lbt_retries = 0;
