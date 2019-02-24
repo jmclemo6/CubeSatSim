@@ -99,11 +99,17 @@ typedef enum {
 #define INA219_REG_CURRENT                     0x04
 #define INA219_REG_CALIBRATION                 0x05
 
-		int		m_fd;		// FD to access I2C bus
-		int		m_address;	// I2C address of INA219
-		int		m_powerMultiplier;
-		int		m_currentDivider;
-		int		m_calValue;
+	int	x_fd;		// I2C bus 0
+	int	x_address;	// I2C address of INA219
+	int	x_powerMultiplier;
+	int	x_currentDivider;
+	int	x_calValue;
+
+	int	y_fd;		// I2C bus 0
+	int	y_address;	// I2C address of INA219
+//	int	y_powerMultiplier;
+//	int	y_currentDivider;
+//	int	y_calValue;
 
 //#include <unistd.h>                             //Needed for I2C port
 #include <fcntl.h>                              //Needed for I2C port
@@ -194,9 +200,9 @@ int main(void) {
 
 // INA219 test code
 /* 16V */
-	m_calValue = 8192;
-	m_powerMultiplier = 1;
-	m_currentDivider = 20;
+	x_calValue = 8192;
+	x_powerMultiplier = 1;
+	x_currentDivider = 20;
 	config = INA219_CONFIG_BVOLTAGERANGE_16V |
                  INA219_CONFIG_GAIN_40MV |
                  INA219_CONFIG_BADCRES_12BIT |
@@ -204,23 +210,36 @@ int main(void) {
                //INA219_CONFIG_SADCRES_12BIT_1S_532US |
                  INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS;
   
-	m_fd  = wiringPiI2CSetupInterface("/dev/i2c-0", 0x40);
-	printf("Opening of fd %d\n", m_fd);
+	x_fd  = wiringPiI2CSetupInterface("/dev/i2c-0", 0x40);
+	printf("Opening of X- fd %d\n", x_fd);
+
+	y_fd  = wiringPiI2CSetupInterface("/dev/i2c-0", 0x41);
+	printf("Opening of Y- fd %d\n", y_fd);
 
 	int x;
         for(x = 0; x < 4; x++) { 
-	wiringPiI2CWriteReg16(m_fd, INA219_REG_CALIBRATION, m_calValue);
-	wiringPiI2CWriteReg16(m_fd, INA219_REG_CONFIG, config);
+	wiringPiI2CWriteReg16(x_fd, INA219_REG_CALIBRATION, x_calValue);
+	wiringPiI2CWriteReg16(x_fd, INA219_REG_CONFIG, config);
 
-//	double shuntVolts  = wiringPiI2CReadReg16(m_fd, INA219_REG_SHUNTVOLTAGE) * 0.01;
-//	double busVolts  = wiringPiI2CReadReg16(m_fd, INA219_REG_BUSVOLTAGE) * 0.001;
+//	double shuntVolts  = wiringPiI2CReadReg16(x_fd, INA219_REG_SHUNTVOLTAGE) * 0.01;
+//	double busVolts  = wiringPiI2CReadReg16(x_fd, INA219_REG_BUSVOLTAGE) * 0.001;
 //	double volts = busVolts + (shuntVolts / 1000);
 	
-	wiringPiI2CWriteReg16(m_fd, INA219_REG_CALIBRATION, m_calValue);
-	double current  = wiringPiI2CReadReg16(m_fd, INA219_REG_CURRENT) / m_currentDivider;
+	wiringPiI2CWriteReg16(x_fd, INA219_REG_CALIBRATION, x_calValue);
+	double current  = wiringPiI2CReadReg16(x_fd, INA219_REG_CURRENT) / x_currentDivider;
 
-	double power  = wiringPiI2CReadReg16(m_fd, INA219_REG_POWER) * m_powerMultiplier;
-	printf("0x40 current %4.2f power %4.2f\n", current, power);
+	double power  = wiringPiI2CReadReg16(x_fd, INA219_REG_POWER) * x_powerMultiplier;
+	
+	wiringPiI2CWriteReg16(y_fd, INA219_REG_CALIBRATION, x_calValue);
+	wiringPiI2CWriteReg16(y_fd, INA219_REG_CONFIG, config);
+	
+	wiringPiI2CWriteReg16(y_fd, INA219_REG_CALIBRATION, x_calValue);
+	double y_current  = wiringPiI2CReadReg16(y_fd, INA219_REG_CURRENT) / x_currentDivider;
+
+	double y_power  = wiringPiI2CReadReg16(y_fd, INA219_REG_POWER) * x_powerMultiplier;
+	
+
+	printf("0x40 current %4.2f power %4.2f 0x41 current %4.2f power %4.2f \n", current, power, y_current, y_power);
 	sleep(0.25);
 	}
 
@@ -230,8 +249,8 @@ exit(0);
    int value = 0;
    int result = 0;
 
-   int I2C0 = wiringPiI2CSetupInterface("/dev/i2c-3", 0x40); // bus is i2c-0!
-   printf("I2C0: %d \n", I2C0);
+   int I2C0 = wiringPiI2CSetupInterface("/dev/i2c-3", 0x40); 
+//   printf("I2C0: %d \n", I2C0);
   
 //  result = wiringPiI2CWriteReg16 (I2C0, 0x05, 8192) ;
 //  printf("Result of WriteReg16: %d \n", result);
