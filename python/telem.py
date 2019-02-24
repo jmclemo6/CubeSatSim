@@ -38,6 +38,7 @@ if INA219DISABLE !=1:
         ina40p = ina40.power()
         ina40.sleep();
     except:
+	print "ina40 fail"
         FAIL = 1
     try:
         ina41 = INA219(SHUNT_OHMS45, MAX_EXPECTED_AMPS45, 0x41)
