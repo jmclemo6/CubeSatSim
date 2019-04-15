@@ -37,7 +37,7 @@
 #include "ina219.h"
 
 // Put your callsign here
-#define CALLSIGN "KU2Y"
+#define CALLSIGN "KN4PMR"
 #define VBATT 15
 #define ADC5 17
 #define ADC6 18
@@ -152,20 +152,20 @@ int main(void) {
                //INA219_CONFIG_SADCRES_12BIT_1S_532US |
                  INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS;
 
-     if ((file_i2c = open("/dev/i2c-0", O_RDWR)) < 0)
+     if ((file_i2c = open("/dev/i2c-1", O_RDWR)) < 0)
      {
-            fprintf(stderr,"ERROR: /dev/ic2-0 bus not present\n");
+            fprintf(stderr,"ERROR: /dev/ic2-1 bus not present\n");
             x_fd = -1;  // Disable reading -X, -Y, and -Z telemetry
 	    y_fd = -1;
 	    z_fd = -1;
      } else
      {  
-         x_fd  = wiringPiI2CSetupInterface("/dev/i2c-0", 0x40);
-//         fprintf(stderr,"Opening of -X fd %d\n", x_fd);
-         y_fd  = wiringPiI2CSetupInterface("/dev/i2c-0", 0x41);
-//        printf("Opening of -Y fd %d\n", y_fd);
-        z_fd  = wiringPiI2CSetupInterface("/dev/i2c-0", 0x44);
-//        printf("Opening of -Z fd %d\n", z_fd);
+         x_fd  = wiringPiI2CSetupInterface("/dev/i2c-1", 0x40);
+         fprintf(stderr,"Opening of -X fd %d\n", x_fd);
+         y_fd  = wiringPiI2CSetupInterface("/dev/i2c-1", 0x41);
+        printf("Opening of -Y fd %d\n", y_fd);
+        z_fd  = wiringPiI2CSetupInterface("/dev/i2c-1", 0x44);
+        printf("Opening of -Z fd %d\n", z_fd);
     }
 	
     int ret;

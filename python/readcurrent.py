@@ -32,7 +32,7 @@ if INA219DISABLE !=1:
         ina40 = INA219(SHUNT_OHMS45, MAX_EXPECTED_AMPS45, 0x40)
         ina40.wake();
         ina40.configure(ina40.RANGE_16V)
-        ina40.busnum = 0;
+        ina40.busnum = 1;
         ina40v = ina40.voltage()
         ina40i = ina40.current()
         ina40p = ina40.power()
