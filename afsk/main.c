@@ -46,11 +46,10 @@
 #define TIME 8
 #define UCTEMP 30
 #define UPTIME_SEC 8 
-#define A 0
-#define B 1
-#define C 2
-#define D 3
-#define E 4
+#define A 1
+#define B 2
+#define C 3
+#define D 4
 
 #define SENSOR_40 0
 #define SENSOR_41 3
@@ -99,7 +98,8 @@ const int currentDivider = 20;
 
 struct SensorData {
   double current;
-  double power;
+  double bus_voltage;
+  double shunt_voltage;
 };
 
 int main(void) {
@@ -215,15 +215,14 @@ int main(void) {
 
     for (int channel = 0; channel < 7; channel++) {
       #ifdef DEBUG_LOGGING
-        printf("%03d %03d %03d %03d %03d\n", tlm[channel][A], tlm[channel][B], tlm[channel][C], tlm[channel][D], tlm[channel][E]); 
+        printf("%03d %03d %03d %03d\n", tlm[channel][A], tlm[channel][B], tlm[channel][C], tlm[channel][D]); 
       #endif
 
-      sprintf(tlm_str, "%d%d%d %d%d%d %d%d%d %d%d%d %d%d%d", 
+      sprintf(tlm_str, "%d%d%d %d%d%d %d%d%d %d%d%d ", 
         channel, upper_digit(tlm[channel][A]), lower_digit(tlm[channel][A]),
         channel, upper_digit(tlm[channel][B]), lower_digit(tlm[channel][B]), 
         channel, upper_digit(tlm[channel][C]), lower_digit(tlm[channel][C]), 
-        channel, upper_digit(tlm[channel][D]), lower_digit(tlm[channel][D]),
-        channel, upper_digit(tlm[channel][E]), lower_digit(tlm[channel][E]));
+        channel, upper_digit(tlm[channel][D]), lower_digit(tlm[channel][D]));
 
       #ifdef DEBUG_LOGGING
         printf("%s \n",tlm_str);
@@ -264,7 +263,7 @@ int main(void) {
       FILE* file2 = popen("/home/pi/mopower/mpcmd LED_STAT=0", "r"); 
       fgets(cmdbuffer, 999, file2);
       pclose(file2);
-     	printf("LED state: %s\n", cmdbuffer);
+      printf("LED state: %s\n", cmdbuffer);
     #endif
     if (ret) {
       fprintf(stderr,
@@ -316,7 +315,8 @@ int upper_digit(int number) {
 struct SensorData read_sensor_data(int sensor) {
     struct SensorData data = {
       .current = 0.0,
-      .power = 0.0
+      .bus_voltage = 0.0,
+      .shunt_voltage = 0.0
     };
 
     if (sensor == -1) {
@@ -328,7 +328,8 @@ struct SensorData read_sensor_data(int sensor) {
     wiringPiI2CWriteReg16(sensor, INA219_REG_CALIBRATION, calibrationValue);
 
     data.current = wiringPiI2CReadReg16(sensor, INA219_REG_CURRENT) / currentDivider; 
-    data.power = wiringPiI2CReadReg16(sensor, INA219_REG_POWER) * powerMultiplier; 
+    data.bus_voltage = wiringPiI2CReadReg16(sensor, INA219_REG_BUSVOLTAGE); 
+    data.shunt_voltage = wiringPiI2CReadReg16(sensor, INA219_REG_SHUNTVOLTAGE);
 
     return data;
 }
@@ -336,7 +337,7 @@ struct SensorData read_sensor_data(int sensor) {
 void print_sensor_data(struct SensorData* data, char* sensor_name, char* bus, int address) {
     fprintf(stderr, "\t%s on %s @ %#x:\n", sensor_name, bus, address);
     fprintf(stderr, "\t\tcurrent: %04.2f\n", data->current);
-    fprintf(stderr, "\t\tpower: %04.2f\n", data->power);
+    fprintf(stderr, "\t\tbus voltage: %04.2f\n", data->bus_voltage);
 }
 
 int get_tlm(int tlm[][5]) {
@@ -411,22 +412,22 @@ int get_tlm(int tlm[][5]) {
   #endif
 	
   tlm[0][A] = (int) (99.5 - plus_x_data.current / 10) % 100;
-  tlm[0][B] = (int) (plus_x_data.power * 10) % 100;
+  tlm[0][B] = (int) (((int) plus_x_data.bus_voltage >> 3) * .004);
   tlm[0][C] = (int) (99.5 - plus_y_data.current / 10) % 100;
-  tlm[0][D] = (int) (plus_y_data.power * 10) % 100;
+  tlm[0][D] = (int) (((int) plus_y_data.bus_voltage >> 3) * .004);
 
   tlm[1][A] = (int) (99.5 - plus_z_data.current / 10) % 100;
-  tlm[1][B] = (int) (plus_z_data.power * 10) % 100;
+  tlm[1][B] = (int) (((int) plus_z_data.bus_voltage >> 3) * .004);
   tlm[1][C] = (int) (99.5 - minus_x_data.current / 10) % 100;
-  tlm[1][D] = (int) (minus_x_data.power * 10) % 100;
+  tlm[1][D] = (int) (((int) minus_x_data.bus_voltage >> 3) * .004);
 
   tlm[2][A] = (int) (99.5 - minus_y_data.current / 10) % 100;
-  tlm[2][B] = (int) (minus_y_data.power * 10) % 100;
+  tlm[2][B] = (int) (((int) minus_y_data.bus_voltage >> 3) * .004);
   tlm[2][C] = (int) (99.5 - battery_data.current / 10) % 100;
-  tlm[2][D] = (int) (battery_data.power * 10) % 100;
+  tlm[2][D] = (int) (((int) battery_data.bus_voltage >> 3) * .004);
 
   tlm[3][A] = (int) (mopower_data.current / 15 + 0.5) % 100;
-  tlm[3][B] = (int) (mopower_data.power * 10) % 100;
+  tlm[3][B] = (int) (((int) mopower_data.bus_voltage >> 3) * .004);
 		   	
   if (tempSensor != -1) {
     int tempValue = wiringPiI2CReadReg16(tempSensor, 0); 
@@ -445,7 +446,7 @@ int get_tlm(int tlm[][5]) {
     printf("Telemetry:\n");
     printf("\t");
     for (int k = 0; k < 7; k++) {
-      for (int j = A; j <= E; j++) {
+      for (int j = A; j <= D; j++) {
         printf(" %02d ",	tlm[k][j]);
       }
       printf("\n\t");
