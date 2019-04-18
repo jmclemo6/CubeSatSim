@@ -88,6 +88,9 @@ int x_calValue;
 int y_fd;	// I2C bus 0 address 0x41
 int z_fd; 	// I2C bos 0 address 0x44
 
+int panel_four_fd;
+int panel_five_fd;
+
 
 int main(void) {
 
@@ -166,6 +169,15 @@ int main(void) {
         printf("Opening of -Y fd %d\n", y_fd);
         z_fd  = wiringPiI2CSetupInterface("/dev/i2c-1", 0x44);
         printf("Opening of -Z fd %d\n", z_fd);
+    }
+
+    if (access("/dev/i2c-0", W_OK | R_OK) < 0) {
+      fprintf(stderr, "ERROR: /dev/i2c-0 not present. Panels 4 and 5 will not be read from.\n");
+      panel_four_fd = -1;
+      panel_five_fd = -1;
+    } else {
+      panel_four_fd = wiringPiI2CSetupInterface("/dev/i2c-0", 0x40);
+      panel_five_fd = wiringPiI2CSetupInterface("/dev/i2c-0", 0x41);
     }
 	
     int ret;
@@ -353,26 +365,48 @@ int get_tlm(int tlm[][5]) {
     }
 */	
 // read i2c current sensors //
-    double current = 0, power = 0, y_current = 0, y_power = 0, z_current = 0, z_power = 0;	
+    double current = 0, power = 0, y_current = 0, y_power = 0, z_current = 0, z_power = 0;
     if (x_fd != -1) {	
 	wiringPiI2CWriteReg16(x_fd, INA219_REG_CALIBRATION, x_calValue);
 	wiringPiI2CWriteReg16(x_fd, INA219_REG_CONFIG, config);	
 	wiringPiI2CWriteReg16(x_fd, INA219_REG_CALIBRATION, x_calValue);
 	current  = wiringPiI2CReadReg16(x_fd, INA219_REG_CURRENT) / x_currentDivider;
 	power  = wiringPiI2CReadReg16(x_fd, INA219_REG_POWER) * x_powerMultiplier;	
+
 	wiringPiI2CWriteReg16(y_fd, INA219_REG_CALIBRATION, x_calValue);
 	wiringPiI2CWriteReg16(y_fd, INA219_REG_CONFIG, config);	
 	wiringPiI2CWriteReg16(y_fd, INA219_REG_CALIBRATION, x_calValue);
 	y_current  = wiringPiI2CReadReg16(y_fd, INA219_REG_CURRENT) / x_currentDivider;
 	y_power  = wiringPiI2CReadReg16(y_fd, INA219_REG_POWER) * x_powerMultiplier;
+
 	wiringPiI2CWriteReg16(z_fd, INA219_REG_CALIBRATION, x_calValue);
 	wiringPiI2CWriteReg16(z_fd, INA219_REG_CONFIG, config);	
 	wiringPiI2CWriteReg16(z_fd, INA219_REG_CALIBRATION, x_calValue);
 	z_current  = wiringPiI2CReadReg16(y_fd, INA219_REG_CURRENT) / x_currentDivider;
 	z_power  = wiringPiI2CReadReg16(y_fd, INA219_REG_POWER) * x_powerMultiplier;
     }	
+
+    double four_power = 0;
+    double four_current = 0;
+    double five_power = 0;
+    double five_current = 0;
+    if (panel_four_fd != -1) {
+	wiringPiI2CWriteReg16(panel_four_fd, INA219_REG_CALIBRATION, x_calValue);
+	wiringPiI2CWriteReg16(panel_four_fd, INA219_REG_CONFIG, config);	
+	wiringPiI2CWriteReg16(panel_four_fd, INA219_REG_CALIBRATION, x_calValue);
+	four_current  = wiringPiI2CReadReg16(panel_four_fd, INA219_REG_CURRENT) / x_currentDivider;
+	four_power  = wiringPiI2CReadReg16(panel_four_fd, INA219_REG_POWER) * x_powerMultiplier;
+
+	wiringPiI2CWriteReg16(panel_five_fd, INA219_REG_CALIBRATION, x_calValue);
+	wiringPiI2CWriteReg16(panel_five_fd, INA219_REG_CONFIG, config);	
+	wiringPiI2CWriteReg16(panel_five_fd, INA219_REG_CALIBRATION, x_calValue);
+	five_current  = wiringPiI2CReadReg16(panel_five_fd, INA219_REG_CURRENT) / x_currentDivider;
+	five_power  = wiringPiI2CReadReg16(panel_five_fd, INA219_REG_POWER) * x_powerMultiplier;
+    }
+
 	printf("-X 0x40 current %4.2f power %4.2f -Y 0x41 current %4.2f power %4.2f -Z 0x44 current %4.2f power %4.2f \n",
 	       current, power, y_current, y_power, z_current, z_power);
+	printf("Fourth Panel @ i2c-0:0x40\n\tcurrent %4.2f\n\tpower %4.2f\n\n" "Fifth Panel @ i2c-0:0x41\n\tcurrent: %4.2f\n\tpower %4.2f\n\n", four_current, four_power, five_current, five_power);
 	
 //	printf("1B: ina219[%d]: %s val: %f \n", SENSOR_40 + CURRENT, ina219[SENSOR_40 + CURRENT], strtof(ina219[SENSOR_40 + CURRENT], NULL));
 
@@ -400,6 +434,7 @@ int get_tlm(int tlm[][5]) {
 
 		tlm[4][A] = (int)((95.8 - temp)/1.48 + 0.5) % 100;
 	}	
+
 	tlm[6][B] = 0 ;
 	tlm[6][D] = 49 + rand() % 3; 
 
