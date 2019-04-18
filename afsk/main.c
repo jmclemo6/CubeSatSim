@@ -133,29 +133,7 @@ int main(void) {
       fprintf(stderr,"tempSensor: %d \n",tempSensor);	
   #endif
 
-  int arduinoI2C = access("dev/i2c-0", W_OK | R_OK);
-  if (arduinoI2C < 0)
-  {
-    fprintf(stderr,"ERROR: /dev/i2c-0 bus not present\n");    
-  } else {    
-    arduinoI2C = wiringPiI2CSetupInterface("/dev/i2c-0", 0x4B);
-
-    #ifdef DEBUG_LOGGING
-      fprintf(stderr,"arduinoI2C: %d\n", arduinoI2C);
-    #endif
-
-    if (arduinoI2C > 0) {
-      if(wiringPiI2CReadReg16(arduinoI2C,0) < 0) {
-          arduinoI2C = -1;  // Disable reading of Arduino payload information 
-          fprintf(stderr,"Arduino payload not present\n");
-      }
-    } else {
-      fprintf(stderr,"Arduino payload not present\n");
-    }
-  }
-
   // new INA219 current reading code
-
   const char* i2c_1 = "/dev/i2c-1";
   file_i2c = access(i2c_1, W_OK | R_OK);
   if (file_i2c < 0)
@@ -168,7 +146,7 @@ int main(void) {
     plus_y_fd = -1;
     plus_z_fd = -1;
     battery_fd = -1;
-    mopower_fd - 1;
+    mopower_fd = -1;
   } else
   {  
     plus_x_fd  = wiringPiI2CSetupInterface(i2c_1, 0x40);
@@ -251,15 +229,6 @@ int main(void) {
         printf("%s \n",tlm_str);
       #endif
       strcat(str, tlm_str);
-    }
-
-    if (arduinoI2C > 0) {  /* Read Arduino payload */
-      for(int reg = 0; reg < 4; reg++) {
-        sprintf(tlm_str, " %04x",wiringPiI2CReadReg16(arduinoI2C,reg));
-        printf("%s \n",tlm_str);
-        strcat(str,tlm_str); /* Append payload telemetry */		
-        usleep(100000);
-      }
     }
 
     digitalWrite (0, LOW); 
@@ -366,33 +335,32 @@ struct SensorData read_sensor_data(int sensor) {
 
 void print_sensor_data(struct SensorData* data, char* sensor_name, char* bus, int address) {
     fprintf(stderr, "\t%s on %s @ %#x:\n", sensor_name, bus, address);
-    fprintf(stderr, "\t\tcurrent: %04.2f", data->current);
-    fprintf(stderr, "\t\tpower: %04.2f", data->power);
+    fprintf(stderr, "\t\tcurrent: %04.2f\n", data->current);
+    fprintf(stderr, "\t\tpower: %04.2f\n", data->power);
 }
 
 int get_tlm(int tlm[][5]) {
   //  Reading I2C voltage and current sensors	
   char cmdbuffer[1000];
-  FILE* file = popen("sudo python /home/pi/CubeSatSim/python/readcurrent.py 2>&1", "r"); 
-  fgets(cmdbuffer, 999, file);
-  pclose(file);
+  FILE* file;
+  int i;
+  //FILE* file = popen("sudo python /home/pi/CubeSatSim/python/readcurrent.py 2>&1", "r"); 
+  //fgets(cmdbuffer, 999, file);
+  //pclose(file);
 
   #ifdef DEBUG_LOGGING
-    fprintf(stderr,"I2C Sensor data: %s\n", cmdbuffer);
+  //  fprintf(stderr,"I2C Sensor data: %s\n", cmdbuffer);
   #endif
 
-  char ina219[16][20];  // voltage, currents, and power from the INA219 current sensors x4a, x40, x41, x44, and x45.
-  int i = 0;
-  char * data2 = strtok (cmdbuffer," ");
+  //char ina219[16][20];  // voltage, currents, and power from the INA219 current sensors x4a, x40, x41, x44, and x45.
+  //int i = 0;
+  //char * data2 = strtok (cmdbuffer," ");
 
-  while (data2 != NULL) {
-    strcpy(ina219[i], data2);
-    #ifdef DEBUG_LOGGING
-      printf ("ina219[d]=%s\n",i,ina219[i]);
-    #endif
-    data2 = strtok (NULL, " ");
-    i++;
-  }
+  //while (data2 != NULL) {
+  //  strcpy(ina219[i], data2);
+  //  data2 = strtok (NULL, " ");
+  //  i++;
+  //}
 
   #ifdef DEBUG_LOGGING
     file = popen("/home/pi/mopower/mpcmd show data", "r"); 
@@ -461,24 +429,29 @@ int get_tlm(int tlm[][5]) {
   tlm[3][B] = (int) (mopower_data.power * 10) % 100;
 		   	
   if (tempSensor != -1) {
-		int tempValue = wiringPiI2CReadReg16(tempSensor, 0); 
+    int tempValue = wiringPiI2CReadReg16(tempSensor, 0); 
     uint8_t upper = (uint8_t) (tempValue >> 8);
     uint8_t lower = (uint8_t) (tempValue & 0xff);
     float temp = (float)lower + ((float)upper / 0x100);
 
-		tlm[3][C] = (int)((95.8 - temp)/1.48 + 0.5) % 100;
-	}	
-
-	tlm[6][B] = 0 ;
-	tlm[6][D] = 49 + rand() % 3; 
-
-// Display tlm
-  for (int k = 0; k < 7; k++) {
-    for (int j = A; j < E; j++) {
-      printf(" %02d ",	tlm[k][j]);
-    }
-    printf("\n");
+    tlm[3][C] = (int)((95.8 - temp)/1.48 + 0.5) % 100;
   }	
+
+  tlm[6][B] = 0 ;
+  tlm[6][D] = 49 + rand() % 3; 
+
+  // Display tlm
+  #ifdef DEBUG_LOGGING
+    printf("Telemetry:\n");
+    printf("\t");
+    for (int k = 0; k < 7; k++) {
+      for (int j = A; j <= E; j++) {
+        printf(" %02d ",	tlm[k][j]);
+      }
+      printf("\n\t");
+    }	
+    printf("\n");
+  #endif
 
   return 0;
 }
