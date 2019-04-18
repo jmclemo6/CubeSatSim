@@ -178,7 +178,7 @@ int main(void) {
     mopower_fd = wiringPiI2CSetupInterface(i2c_1, 0x4a);
 
     #ifdef DEBUG_LOGGING
-      fprintf(stderr, "File Descriptors of i2c-1 Addresses\n")
+      fprintf(stderr, "File Descriptors of i2c-1 Addresses\n");
       fprintf(stderr, "\t+X @ 0x40: %d\n", plus_x_fd);
       fprintf(stderr, "\t+Y @ 0x41: %d\n", plus_y_fd);
       fprintf(stderr, "\t+Z @ 0x44: %d\n", plus_z_fd);
@@ -432,13 +432,13 @@ int get_tlm(int tlm[][5]) {
 
   #ifdef DEBUG_LOGGING
     fprintf(stderr, "Power Information:\n");
-    print_sensor_data(plus_x_data, "+X", "i2c-1", 0x40);
-    print_sensor_data(plus_y_data, "+Y", "i2c-1", 0x41);
-    print_sensor_data(plus_z_data, "+Z", "i2c-1", 0x44);
-    print_sensor_data(battery_data, "BATTERY", "i2c-1", 0x45);
-    print_sensor_data(mopower_data, "MOPOWER", "i2c-1", 0x4a);
-    print_sensor_data(minus_x_data, "-X", "i2c-0", 0x40);
-    print_sensor_data(minus_y_data, "-Y", "i2c-0", 0x41);
+    print_sensor_data(&plus_x_data, "+X", "i2c-1", 0x40);
+    print_sensor_data(&plus_y_data, "+Y", "i2c-1", 0x41);
+    print_sensor_data(&plus_z_data, "+Z", "i2c-1", 0x44);
+    print_sensor_data(&battery_data, "BATTERY", "i2c-1", 0x45);
+    print_sensor_data(&mopower_data, "MOPOWER", "i2c-1", 0x4a);
+    print_sensor_data(&minus_x_data, "-X", "i2c-0", 0x40);
+    print_sensor_data(&minus_y_data, "-Y", "i2c-0", 0x41);
     printf("\n");
   #endif
 	
