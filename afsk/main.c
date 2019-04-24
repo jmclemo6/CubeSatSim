@@ -46,10 +46,11 @@
 #define TIME 8
 #define UCTEMP 30
 #define UPTIME_SEC 8 
-#define A 1
-#define B 2
-#define C 3
-#define D 4
+#define A 0
+#define B 1
+#define C 2
+#define D 3
+#define E 4
 
 #define SENSOR_40 0
 #define SENSOR_41 3
@@ -218,11 +219,12 @@ int main(void) {
         printf("%03d %03d %03d %03d\n", tlm[channel][A], tlm[channel][B], tlm[channel][C], tlm[channel][D]); 
       #endif
 
-      sprintf(tlm_str, "%d%d%d %d%d%d %d%d%d %d%d%d ", 
+      sprintf(tlm_str, "%d%d%d %d%d%d %d%d%d %d%d%d %d%d%d ", 
         channel, upper_digit(tlm[channel][A]), lower_digit(tlm[channel][A]),
         channel, upper_digit(tlm[channel][B]), lower_digit(tlm[channel][B]), 
         channel, upper_digit(tlm[channel][C]), lower_digit(tlm[channel][C]), 
-        channel, upper_digit(tlm[channel][D]), lower_digit(tlm[channel][D]));
+        channel, upper_digit(tlm[channel][D]), lower_digit(tlm[channel][D]),
+	channel, upper_digit(tlm[channel][E]), lower_digit(tlm[channel][E]));
 
       #ifdef DEBUG_LOGGING
         printf("%s \n",tlm_str);
@@ -446,7 +448,7 @@ int get_tlm(int tlm[][5]) {
     printf("Telemetry:\n");
     printf("\t");
     for (int k = 0; k < 7; k++) {
-      for (int j = A; j <= D; j++) {
+      for (int j = A; j <= E; j++) {
         printf(" %02d ",	tlm[k][j]);
       }
       printf("\n\t");
